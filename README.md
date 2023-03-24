@@ -6,6 +6,8 @@
 
 A simple tile system, that provides a declarative API, with Flame Component System in mind
 
+![](./media/pixel-logo.png)
+
 ## Installation 💻
 
 **❗ In order to start using Combustile you must have the [Flutter SDK][flutter_install_link] installed on your machine.**
