@@ -1,0 +1,35 @@
+name: combustile_editor
+
+concurrency:
+  group: $-$
+  cancel-in-progress: true
+
+on:
+  push:
+    paths:
+      - "packages/combustile_editor/**"
+      - ".github/workflows/editor.yaml"
+    branches:
+      - main
+  pull_request:
+    paths:
+      - "packages/combustile_editor/**"
+      - ".github/workflows/editor.yaml"
+    branches:
+      - main
+
+jobs:
+  semantic-pull-request:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_channel: stable
+
+  spell-check:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
+    with:
+      includes: |
+        **/*.md
+      modified_files_only: false
