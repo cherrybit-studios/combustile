@@ -1,4 +1,4 @@
-name: ci
+name: editor_project_repository
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
