@@ -1,0 +1,34 @@
+name: ci
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    paths:
+      - "packages/combustile_editor/packages/project_repository/**"
+      - ".github/workflows/editor_project_repository.yaml"
+    branches:
+      - main
+  pull_request:
+    paths:
+      - "packages/combustile_editor/packages/project_repository/**"
+      - ".github/workflows/editor_project_repository.yaml"
+    branches:
+      - main
+
+jobs:
+  semantic_pull_request:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+
+  spell-check:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
+    with:
+      includes: "**/*.md"
+      modified_files_only: false
+
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
+    working_directory: packages/combustile_editor/packages/project_repository
+
