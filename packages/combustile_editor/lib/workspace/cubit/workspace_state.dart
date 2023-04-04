@@ -1,13 +1,11 @@
 part of 'workspace_cubit.dart';
 
 class WorkspaceState extends Equatable {
-
   const WorkspaceState({
     required this.projectTreeSize,
   });
 
-  const WorkspaceState.initial()
-      : projectTreeSize = 200;
+  const WorkspaceState.initial() : projectTreeSize = 200;
 
   final double projectTreeSize;
 

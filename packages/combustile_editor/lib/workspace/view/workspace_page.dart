@@ -10,6 +10,6 @@ class WorkspacePage extends StatelessWidget {
     return BlocProvider<WorkspaceCubit>(
       create: (_) => WorkspaceCubit(),
       child: const WorkspaceView(),
-     );
+    );
   }
 }
