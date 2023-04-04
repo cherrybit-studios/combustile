@@ -30,5 +30,6 @@ jobs:
 
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
-    working_directory: packages/combustile_editor/packages/project_repository
+    with:
+      working_directory: packages/combustile_editor/packages/project_repository
 
