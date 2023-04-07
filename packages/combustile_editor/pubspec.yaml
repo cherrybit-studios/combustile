@@ -11,6 +11,7 @@ dependencies:
   combustile:
     path: ../combustile
   equatable: ^2.0.5
+  file_selector: ^0.9.2+4
   flame: ^1.6.0
   flutter:
     sdk: flutter
@@ -19,8 +20,9 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   nes_ui:
-    git:
-      url: https://github.com/erickzanardo/nes_ui.git
+    path: ../../../../../nes_ui
+  project_repository:
+    path: packages/project_repository
 
 dev_dependencies:
   bloc_test: ^9.1.1
