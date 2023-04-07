@@ -391,9 +391,11 @@ packages:
   nes_ui:
     dependency: "direct main"
     description:
-      path: "../../../../../nes_ui"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "4ca46ec9248b8cb4d16df598d8bee55dbad91afc"
+      url: "https://github.com/erickzanardo/nes_ui.git"
+    source: git
     version: "0.5.0"
   nested:
     dependency: transitive
