@@ -1,4 +1,4 @@
-import 'package:combustile_editor/l10n/l10n.dart';
+import 'package:combustile_editor/project/project.dart';
 import 'package:combustile_editor/workspace/workspace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +11,6 @@ class WorkspaceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     final workspaceCubit = context.watch<WorkspaceCubit>();
     final state = workspaceCubit.state;
 
@@ -20,9 +19,9 @@ class WorkspaceView extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            SizedBox(
-              height: 32,
-              child: Center(child: Text(l10n.combustile)),
+            const SizedBox(
+              height: 48,
+              child: Toolbar(),
             ),
             Expanded(
               child: Row(

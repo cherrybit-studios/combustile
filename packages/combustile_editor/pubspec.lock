@@ -104,6 +104,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.6.3"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      sha256: "0b0036e8cccbfbe0555fd83c1d31a6f30b77a96b598b35a5d36dd41f718695e9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.3+4"
   crypto:
     dependency: transitive
     description:
@@ -152,6 +160,62 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
+  file_selector:
+    dependency: "direct main"
+    description:
+      name: file_selector
+      sha256: "1ebc23f487172ac2cb9ead80fa2fab09af75e1e8239cbf8ef6d62b623991f785"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.2+4"
+  file_selector_ios:
+    dependency: transitive
+    description:
+      name: file_selector_ios
+      sha256: eabb039d0260f902d0e99f41d73a5a8b6b8d246d86021d96dac7bc30f148a4e9
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1+2"
+  file_selector_linux:
+    dependency: transitive
+    description:
+      name: file_selector_linux
+      sha256: "39eb2bec65a532ff81816123ee0f08d4993ee2a3cd82d88c7e4b64275e565b54"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.1+2"
+  file_selector_macos:
+    dependency: transitive
+    description:
+      name: file_selector_macos
+      sha256: "89d24ed1b37df4f2f7d8fa6ad166f4533ecc94b00ebcee82a2445c64b603202b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.0+7"
+  file_selector_platform_interface:
+    dependency: transitive
+    description:
+      name: file_selector_platform_interface
+      sha256: "98b3f98effcc135bd951b34b575886620ce208d3ff60e3b61cbaea9e2e00f54b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  file_selector_web:
+    dependency: transitive
+    description:
+      name: file_selector_web
+      sha256: dd961a76a1954225b407313356f41cc106ccffc764a1c30764cc6fe09b109932
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.0+4"
+  file_selector_windows:
+    dependency: transitive
+    description:
+      name: file_selector_windows
+      sha256: "92f1d84f070405506ee4564eec848a0ad5576d7fe6388227ec237c97f5330dac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.1+7"
   flame:
     dependency: "direct main"
     description:
@@ -188,6 +252,11 @@ packages:
     version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -324,7 +393,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: f6124dd6c7ecab40ca5779ba2f800dafe9e80b65
+      resolved-ref: "4ca46ec9248b8cb4d16df598d8bee55dbad91afc"
       url: "https://github.com/erickzanardo/nes_ui.git"
     source: git
     version: "0.5.0"
@@ -456,6 +525,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.4"
+  project_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/project_repository"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   provider:
     dependency: transitive
     description:
