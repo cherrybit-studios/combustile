@@ -11,4 +11,17 @@ class WorkspaceCubit extends Cubit<WorkspaceState> {
       emit(state.copyWith(projectTreeSize: size));
     }
   }
+
+  void openFileTab(String path) {
+    if (!state.tabs.contains(path)) {
+      emit(state.copyWith(tabs: [...state.tabs, path]));
+    }
+  }
+
+  void closeFileTab(int i) {
+    if (i < state.tabs.length) {
+      final newTabs = [...state.tabs]..removeAt(i);
+      emit(state.copyWith(tabs: newTabs));
+    }
+  }
 }
