@@ -26,7 +26,10 @@ class WorkspaceView extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  ProjectTree(width: state.projectTreeSize),
+                  ProjectTree(
+                    width: state.projectTreeSize,
+                    onOpenFile: context.read<WorkspaceCubit>().openFileTab,
+                  ),
                   GestureDetector(
                     onHorizontalDragUpdate: (details) {
                       workspaceCubit.resizeProjectTreeSize(

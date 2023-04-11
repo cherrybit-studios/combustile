@@ -18,7 +18,35 @@ void main() {
       'resizeProjectTreeSize emits the correct state',
       build: WorkspaceCubit.new,
       act: (cubit) => cubit.resizeProjectTreeSize(201),
-      expect: () => [const WorkspaceState(projectTreeSize: 201)],
+      expect: () => [const WorkspaceState(projectTreeSize: 201, tabs: [])],
     );
   });
+
+  blocTest<WorkspaceCubit, WorkspaceState>(
+    'can open a file tab',
+    build: WorkspaceCubit.new,
+    act: (cubit) => cubit.openFileTab('test'),
+    expect: () => [
+      const WorkspaceState(
+        projectTreeSize: 200,
+        tabs: ['test'],
+      ),
+    ],
+  );
+
+  blocTest<WorkspaceCubit, WorkspaceState>(
+    'can close a tab',
+    build: WorkspaceCubit.new,
+    seed: () => const WorkspaceState(
+      projectTreeSize: 200,
+      tabs: ['test', 'bla'],
+    ),
+    act: (cubit) => cubit.closeFileTab(0),
+    expect: () => [
+      const WorkspaceState(
+        projectTreeSize: 200,
+        tabs: ['bla'],
+      ),
+    ],
+  );
 }

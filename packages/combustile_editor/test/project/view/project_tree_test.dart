@@ -42,6 +42,7 @@ void main() {
     });
 
     testWidgets('can open a file', (tester) async {
+      String? selected;
       const state = ProjectStateLoaded(
         project: Project(
           entries: [
@@ -65,22 +66,29 @@ void main() {
         Stream.fromIterable([state]),
         initialState: state,
       );
-      await tester.pumpSubject(1000, projectCubit);
+      await tester.pumpSubject(1000, projectCubit, (value) => selected = value);
 
       await tester.tap(find.text('my_file.dart'));
       await tester.pump();
 
-      // TODO(erickzanardo): verify the file was opened when implemented.
+      expect(selected, equals('my_file.dart'));
     });
   });
 }
 
 extension on WidgetTester {
-  Future<void> pumpSubject(double width, ProjectCubit projectCubit) async {
+  Future<void> pumpSubject(
+    double width,
+    ProjectCubit projectCubit, [
+    void Function(String)? onOpenFile,
+  ]) async {
     await pumpApp(
       BlocProvider<ProjectCubit>.value(
         value: projectCubit,
-        child: ProjectTree(width: width),
+        child: ProjectTree(
+          width: width,
+          onOpenFile: onOpenFile ?? (_) {},
+        ),
       ),
     );
   }

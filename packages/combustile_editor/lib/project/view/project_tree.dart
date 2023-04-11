@@ -7,9 +7,11 @@ class ProjectTree extends StatelessWidget {
   const ProjectTree({
     super.key,
     required this.width,
+    required this.onOpenFile,
   });
 
   final double width;
+  final void Function(String) onOpenFile;
 
   static const openKey = Key('project_tree_open_key');
 
@@ -36,13 +38,16 @@ class ProjectTree extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 8),
+          const Divider(),
+          const SizedBox(height: 8),
           Expanded(
             child: (state is ProjectStateLoaded)
                 ? NesSingleChildScrollView(
                     clipContent: true,
                     child: NesFileExplorer(
                       onOpenFile: (file) {
-                        //
+                        onOpenFile(file.path);
                       },
                       entries: [
                         for (final entry in state.project.entries)
