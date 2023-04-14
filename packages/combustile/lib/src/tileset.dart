@@ -1,8 +1,11 @@
 import 'dart:ui';
 
 import 'package:combustile/combustile.dart';
+import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'package:flame/flame.dart';
+import 'package:yaml/yaml.dart';
 
 /// {@template tileset}
 /// A tileset is a collection of tiles that can be used to create a sprite.
@@ -13,6 +16,21 @@ class Tileset {
     required this.tileSize,
     required this.image,
   });
+
+  /// Creates a [Tileset] from a [yaml].
+  static Future<Tileset> fromYaml(
+    YamlMap yaml, {
+    Images? images,
+  }) async {
+    final imagesInstance = images ?? Flame.images;
+
+    final tileset = yaml['tileset'] as YamlMap;
+
+    return Tileset(
+      tileSize: tileset['tile_size'] as int,
+      image: await imagesInstance.load(tileset['image'] as String),
+    );
+  }
 
   /// The size of each tile.
   final int tileSize;
