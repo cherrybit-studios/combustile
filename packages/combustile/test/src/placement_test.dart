@@ -15,8 +15,8 @@ void main() {
         final parentSize = Vector2.all(100);
         final position = placement.calculatePosition(parentSize);
         final size = placement.calculateSize(parentSize);
-        expect(position, Vector2.all(10));
-        expect(size, Vector2.all(10));
+        expect(position, equals(Vector2.all(10)));
+        expect(size, equals(Vector2.all(10)));
       });
     });
 
@@ -31,8 +31,8 @@ void main() {
         final parentSize = Vector2.all(100);
         final position = placement.calculatePosition(parentSize);
         final size = placement.calculateSize(parentSize);
-        expect(position, Vector2.all(10));
-        expect(size, Vector2.all(80));
+        expect(position, equals(Vector2.all(10)));
+        expect(size, equals(Vector2.all(80)));
       });
 
       test('calculates correctly when using LTWH', () {
@@ -45,8 +45,8 @@ void main() {
         final parentSize = Vector2.all(100);
         final position = placement.calculatePosition(parentSize);
         final size = placement.calculateSize(parentSize);
-        expect(position, Vector2.all(10));
-        expect(size, Vector2.all(10));
+        expect(position, equals(Vector2.all(10)));
+        expect(size, equals(Vector2.all(10)));
       });
 
       test('calculates correctly when using RBWH', () {
@@ -59,8 +59,8 @@ void main() {
         final parentSize = Vector2.all(100);
         final position = placement.calculatePosition(parentSize);
         final size = placement.calculateSize(parentSize);
-        expect(position, Vector2(80, 80));
-        expect(size, Vector2.all(10));
+        expect(position, equals(Vector2(80, 80)));
+        expect(size, equals(Vector2.all(10)));
       });
 
       test('calculates correctly when using LRTH', () {
@@ -73,8 +73,8 @@ void main() {
         final parentSize = Vector2.all(100);
         final position = placement.calculatePosition(parentSize);
         final size = placement.calculateSize(parentSize);
-        expect(position, Vector2.zero());
-        expect(size, Vector2(100, 10));
+        expect(position, equals(Vector2.zero()));
+        expect(size, equals(Vector2(100, 10)));
       });
     });
   });
