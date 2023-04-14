@@ -3,6 +3,7 @@
 library combustile;
 
 export 'src/objects/objects.dart';
+export 'src/parsers/parsers.dart';
 export 'src/tile.dart';
 export 'src/tiled_map.dart';
 export 'src/tileset.dart';
