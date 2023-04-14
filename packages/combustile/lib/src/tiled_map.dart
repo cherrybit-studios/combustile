@@ -1,5 +1,4 @@
 import 'package:combustile/combustile.dart';
-import 'package:combustile/src/parsers/vector2_parser.dart';
 import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
