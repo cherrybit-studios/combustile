@@ -30,6 +30,21 @@ map:
   tileset:
     tile_size: 16
     image: tileset.png
+  objects:
+    - id: test
+      placement:
+        absolute:
+          position: 12, 10
+          size: 12, 10
+      type: single_object
+      tile: 3, 4
+    - id: test_2
+      placement:
+        absolute:
+          position: 12, 10
+          size: 12, 10
+      type: single_object
+      tile: 3, 4
 ''';
 
       final yaml = loadYaml(yamlRaw) as YamlMap;
@@ -39,6 +54,7 @@ map:
       expect(map.size, equals(Vector2(200, 300)));
       expect(map.tileset.tileSize, equals(16));
       expect(map.tileset.image, equals(image));
+      expect(map.objects, hasLength(2));
     });
   });
 }

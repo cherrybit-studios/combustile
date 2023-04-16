@@ -31,8 +31,19 @@ class TiledMap {
 
     final size = parseVector2(map['size'] as String);
 
+    final yamlObjects = map['objects'] as YamlList;
+    final objects = await Future.wait(
+      yamlObjects
+          .map(
+            (yamlObject) => CombustileObject.fromYaml(
+              yamlObject as YamlMap,
+            ),
+          )
+          .toList(),
+    );
+
     return TiledMap(
-      objects: [],
+      objects: objects,
       tileset: tilesetInstance,
       size: size,
     );
