@@ -8,6 +8,7 @@ environment:
   flutter: 3.3.0
 
 dependencies:
+  equatable: ^2.0.5
   flame: ^1.7.3
   flutter:
     sdk: flutter

@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 /// {@template tile}
 /// A tile is a simple object that represents a position in the tileset grid.
 /// {@endtemplate}
-class Tile {
+class Tile extends Equatable {
   /// {@macro tile}
   const Tile({
     required this.x,
@@ -31,4 +33,7 @@ class Tile {
 
   @override
   String toString() => 'Tile(x: $x, y: $y)';
+
+  @override
+  List<Object?> get props => [x, y];
 }
