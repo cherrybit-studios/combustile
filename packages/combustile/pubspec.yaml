@@ -8,7 +8,7 @@ environment:
   flutter: 3.3.0
 
 dependencies:
-  flame: ^1.7.0
+  flame: ^1.7.3
   flutter:
     sdk: flutter
   yaml: ^3.1.1
@@ -18,11 +18,3 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^0.3.0
   very_good_analysis: ^3.1.0
-
-
-dependency_overrides:
-  flame:
-    git:
-      url: https://github.com/flame-engine/flame.git
-      ref: feat/bump-ordered-set
-      path: packages/flame
