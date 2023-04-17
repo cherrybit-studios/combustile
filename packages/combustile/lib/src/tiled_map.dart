@@ -15,11 +15,12 @@ class TiledMap {
     required this.size,
   });
 
-  /// Creates a [TiledMap] from a [yaml].
+  /// Creates a [TiledMap] from a [yamlSource].
   static Future<TiledMap> fromYaml(
-    YamlMap yaml, {
+    String yamlSource, {
     Images? images,
   }) async {
+    final yaml = loadYaml(yamlSource) as YamlMap;
     final imagesInstance = images ?? Flame.images;
 
     final map = yaml['map'] as YamlMap;

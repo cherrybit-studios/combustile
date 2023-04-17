@@ -47,9 +47,7 @@ map:
       tile: 3, 4
 ''';
 
-      final yaml = loadYaml(yamlRaw) as YamlMap;
-
-      final map = await TiledMap.fromYaml(yaml, images: images);
+      final map = await TiledMap.fromYaml(yamlRaw, images: images);
 
       expect(map.size, equals(Vector2(200, 300)));
       expect(map.tileset.tileSize, equals(16));

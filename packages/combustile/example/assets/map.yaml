@@ -1,0 +1,57 @@
+map:
+  size: 15, 10
+  tileset:
+    tile_size: 16
+    image: assets/images/tileset.png
+  objects:
+    - type: repeat_object
+      tile: '1, 0'
+      placement:
+        absolute:
+          position: '-4, 0'
+          size: '9, 1'
+    - type: group_object 
+      placement:
+        absolute:
+          position: '-3, -5'
+          size: '7, 5'
+      children:
+        - type: nine_box_object
+          src_position: '0, 3'
+          src_size: '3, 3'
+          placement:
+            relative:
+              top: 2
+              left: 1
+              width: 5
+              height: 3
+        - type: horizontal_repeat_object 
+          tiles:
+            - '0, 3'
+            - '1, 5'
+            - '2, 5'
+          placement:
+            relative:
+              top: 1
+              left: 0
+              right: 0
+              height: 1
+        - type: horizontal_repeat_object 
+          tiles:
+            - '3, 3'
+            - '4, 3'
+            - '5, 3'
+          placement:
+            relative:
+              top: 0
+              left: 0
+              right: 0
+              height: 1
+        - type: single_object 
+          tile: '6, 3'
+          placement:
+            relative:
+              bottom: 0
+              left: 3
+              width: 1
+              height: 1
