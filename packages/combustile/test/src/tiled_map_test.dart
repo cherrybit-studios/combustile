@@ -5,7 +5,6 @@ import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:yaml/yaml.dart';
 
 class _MockImages extends Mock implements Images {}
 
