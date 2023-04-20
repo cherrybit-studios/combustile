@@ -6,11 +6,9 @@ import 'package:nes_ui/nes_ui.dart';
 class ProjectTree extends StatelessWidget {
   const ProjectTree({
     super.key,
-    required this.width,
     required this.onOpenFile,
   });
 
-  final double width;
   final void Function(String) onOpenFile;
 
   static const openKey = Key('project_tree_open_key');
@@ -21,7 +19,6 @@ class ProjectTree extends StatelessWidget {
     final state = projectCubit.state;
 
     return NesContainer(
-      width: width,
       height: double.infinity,
       child: Column(
         children: [

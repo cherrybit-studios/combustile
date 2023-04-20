@@ -25,7 +25,6 @@ void main() {
       workspaceCubit = _MockWorkspaceCubit();
 
       const state = WorkspaceState(
-        projectTreeSize: 200,
         tabs: ['test'],
       );
 

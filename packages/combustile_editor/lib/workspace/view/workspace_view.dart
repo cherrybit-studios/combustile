@@ -11,9 +11,6 @@ class WorkspaceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workspaceCubit = context.watch<WorkspaceCubit>();
-    final state = workspaceCubit.state;
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -24,35 +21,13 @@ class WorkspaceView extends StatelessWidget {
               child: Toolbar(),
             ),
             Expanded(
-              child: Row(
+              child: NesSplitPanel(
+                initialSizes: const [.2, .8],
                 children: [
                   ProjectTree(
-                    width: state.projectTreeSize,
                     onOpenFile: context.read<WorkspaceCubit>().openFileTab,
                   ),
-                  GestureDetector(
-                    onHorizontalDragUpdate: (details) {
-                      workspaceCubit.resizeProjectTreeSize(
-                        state.projectTreeSize + details.delta.dx,
-                      );
-                    },
-                    child: SizedBox(
-                      width: 24,
-                      child: Center(
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.resizeColumn,
-                          child: NesIcon(
-                            key: resizeProjectTreeKey,
-                            size: const Size.square(24),
-                            iconData: NesIcons.instance.threeVerticalDots,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Expanded(
-                    child: Editors(),
-                  ),
+                  const Editors(),
                 ],
               ),
             ),

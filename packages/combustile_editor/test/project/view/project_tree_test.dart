@@ -28,12 +28,12 @@ void main() {
     });
 
     testWidgets('renders correctly', (tester) async {
-      await tester.pumpSubject(1000, projectCubit);
+      await tester.pumpSubject(projectCubit);
       expect(find.byType(ProjectTree), findsOneWidget);
     });
 
     testWidgets('can open a project', (tester) async {
-      await tester.pumpSubject(1000, projectCubit);
+      await tester.pumpSubject(projectCubit);
 
       await tester.tap(find.byKey(ProjectTree.openKey));
       await tester.pump();
@@ -66,7 +66,7 @@ void main() {
         Stream.fromIterable([state]),
         initialState: state,
       );
-      await tester.pumpSubject(1000, projectCubit, (value) => selected = value);
+      await tester.pumpSubject(projectCubit, (value) => selected = value);
 
       await tester.tap(find.text('my_file.dart'));
       await tester.pump();
@@ -78,7 +78,6 @@ void main() {
 
 extension on WidgetTester {
   Future<void> pumpSubject(
-    double width,
     ProjectCubit projectCubit, [
     void Function(String)? onOpenFile,
   ]) async {
@@ -86,7 +85,6 @@ extension on WidgetTester {
       BlocProvider<ProjectCubit>.value(
         value: projectCubit,
         child: ProjectTree(
-          width: width,
           onOpenFile: onOpenFile ?? (_) {},
         ),
       ),

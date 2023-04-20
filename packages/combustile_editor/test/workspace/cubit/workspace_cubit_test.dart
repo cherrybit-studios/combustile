@@ -13,13 +13,6 @@ void main() {
       final cubit = WorkspaceCubit();
       expect(cubit.state, equals(const WorkspaceState.initial()));
     });
-
-    blocTest<WorkspaceCubit, WorkspaceState>(
-      'resizeProjectTreeSize emits the correct state',
-      build: WorkspaceCubit.new,
-      act: (cubit) => cubit.resizeProjectTreeSize(201),
-      expect: () => [const WorkspaceState(projectTreeSize: 201, tabs: [])],
-    );
   });
 
   blocTest<WorkspaceCubit, WorkspaceState>(
@@ -28,7 +21,6 @@ void main() {
     act: (cubit) => cubit.openFileTab('test'),
     expect: () => [
       const WorkspaceState(
-        projectTreeSize: 200,
         tabs: ['test'],
       ),
     ],
@@ -38,13 +30,11 @@ void main() {
     'can close a tab',
     build: WorkspaceCubit.new,
     seed: () => const WorkspaceState(
-      projectTreeSize: 200,
       tabs: ['test', 'bla'],
     ),
     act: (cubit) => cubit.closeFileTab(0),
     expect: () => [
       const WorkspaceState(
-        projectTreeSize: 200,
         tabs: ['bla'],
       ),
     ],

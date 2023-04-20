@@ -48,22 +48,6 @@ void main() {
       );
       expect(find.text('Combustile'), findsOneWidget);
     });
-
-    testWidgets('can resize the project tree', (tester) async {
-      await tester.pumpSubject(
-        cubit: cubit,
-        projectCubit: projectCubit,
-        fileManager: fileManager,
-      );
-
-      await tester.drag(
-        find.byKey(WorkspaceView.resizeProjectTreeKey),
-        const Offset(-10, 0),
-      );
-      await tester.pumpAndSettle();
-
-      verify(() => cubit.resizeProjectTreeSize(190)).called(1);
-    });
   });
 }
 
