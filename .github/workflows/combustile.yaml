@@ -14,10 +14,10 @@ on:
 
 jobs:
   semantic_pull_request:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1.12.0
 
   spell-check:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1.12.0
     with:
       includes: "**/*.md"
       modified_files_only: false
