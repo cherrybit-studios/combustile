@@ -70,6 +70,81 @@ void main() {
         ),
       );
     });
+
+    group('copyWith', () {
+      test('returns a copy of the project', () {
+        final project = Project(
+          name: '',
+          path: '',
+          entries: const [],
+        );
+        final copy = project.copyWith();
+        expect(project, equals(copy));
+      });
+
+      test('can update the name', () {
+        final project = Project(
+          name: '',
+          path: '',
+          entries: const [],
+        );
+        final copy = project.copyWith(name: '1');
+        expect(
+          copy,
+          equals(
+            Project(
+              name: '1',
+              path: '',
+              entries: const [],
+            ),
+          ),
+        );
+      });
+
+      test('can update the path', () {
+        final project = Project(
+          name: '',
+          path: '',
+          entries: const [],
+        );
+        final copy = project.copyWith(path: '1');
+        expect(
+          copy,
+          equals(
+            Project(
+              name: '',
+              path: '1',
+              entries: const [],
+            ),
+          ),
+        );
+      });
+
+      test('can update the entries', () {
+        final project = Project(
+          name: '',
+          path: '',
+          entries: const [],
+        );
+        final copy = project.copyWith(
+          entries: const [
+            ProjectEntry(name: '1', path: '', isFile: false),
+          ],
+        );
+        expect(
+          copy,
+          equals(
+            Project(
+              name: '',
+              path: '',
+              entries: const [
+                ProjectEntry(name: '1', path: '', isFile: false),
+              ],
+            ),
+          ),
+        );
+      });
+    });
   });
 
   group('ProjectEntry', () {

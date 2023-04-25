@@ -3,6 +3,27 @@ import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:project_repository/project_repository.dart';
 
+/// {@template file_outside_project_exception}
+/// Throws when an attempt to create a file outside of the project is made.
+/// {@endtemplate}
+class FileOutsideProjectException implements Exception {
+  /// {@macro file_outside_project_exception}
+  FileOutsideProjectException(this.filePath, this.projectPath, this.stackTrace);
+
+  /// The path of the file that was attempted to be created.
+  final String filePath;
+
+  /// The path of the project.
+  final String projectPath;
+
+  /// The stack trace.
+  final StackTrace stackTrace;
+
+  @override
+  String toString() =>
+      'FileOutsideProjectException: $filePath is not inside $projectPath';
+}
+
 /// {@template project_load_failure}
 /// Throws when a project fails to load.
 /// {@endtemplate}
@@ -54,5 +75,29 @@ class ProjectRepository {
     } catch (e, s) {
       throw ProjectLoadFailure(e.toString(), s);
     }
+  }
+
+  /// Creates a new file in the given [project].
+  ///
+  /// Throws a [FileOutsideProjectException] if the file is not inside the
+  /// project.
+  Future<ProjectEntry?> createFile(Directory project, String filePath) async {
+    final file = File(filePath);
+
+    await file.create();
+
+    if (!file.path.startsWith(project.path)) {
+      throw FileOutsideProjectException(
+        file.path,
+        project.path,
+        StackTrace.current,
+      );
+    }
+
+    return ProjectEntry(
+      path: file.path,
+      name: path.basename(file.path),
+      isFile: true,
+    );
   }
 }

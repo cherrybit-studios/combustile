@@ -71,6 +71,65 @@ void main() {
           ),
         );
       });
+
+      group('copyWith', () {
+        test('returns same value when no params passed', () {
+          final state = ProjectStateLoaded(
+            project: Project(
+              entries: const [],
+              name: '',
+              path: '',
+            ),
+          );
+          expect(state.copyWith(), equals(state));
+        });
+
+        test('returns object with updated project', () {
+          final state = ProjectStateLoaded(
+            project: Project(
+              entries: const [],
+              name: '',
+              path: '',
+            ),
+          );
+          final updatedProject = Project(
+            entries: const [],
+            name: 'a',
+            path: '',
+          );
+          expect(
+            state.copyWith(project: updatedProject),
+            equals(
+              ProjectStateLoaded(
+                project: updatedProject,
+              ),
+            ),
+          );
+        });
+
+        test('returns object with updated errors', () {
+          final state = ProjectStateLoaded(
+            project: Project(
+              entries: const [],
+              name: '',
+              path: '',
+            ),
+          );
+          expect(
+            state.copyWith(errors: [ProjectOperationError.fileOutsideProject]),
+            equals(
+              ProjectStateLoaded(
+                project: Project(
+                  entries: const [],
+                  name: '',
+                  path: '',
+                ),
+                errors: const [ProjectOperationError.fileOutsideProject],
+              ),
+            ),
+          );
+        });
+      });
     });
   });
 }

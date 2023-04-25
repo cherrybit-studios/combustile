@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:combustile_editor/project/project.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -16,6 +17,7 @@ void main() {
     setUp(() {
       projectCubit = _MockProjectCubit();
       when(projectCubit.loadProject).thenAnswer((_) async {});
+      when(projectCubit.createFile).thenAnswer((_) async {});
       whenListen(
         projectCubit,
         Stream.fromIterable(
@@ -73,6 +75,53 @@ void main() {
 
       expect(selected, equals('my_file.dart'));
     });
+
+    testWidgets('can create a new file', (tester) async {
+      const state = ProjectStateLoaded(
+        project: Project(
+          entries: [],
+          name: 'a',
+          path: 'a',
+        ),
+      );
+      whenListen(
+        projectCubit,
+        Stream.fromIterable([state]),
+        initialState: state,
+      );
+      await tester.pumpSubject(projectCubit, (_) {});
+
+      await tester.tap(find.byKey(ProjectTree.newFileKey));
+      await tester.pump();
+
+      verify(projectCubit.createFile).called(1);
+    });
+
+    testWidgets('display the file not inside project error', (tester) async {
+      const state = ProjectStateLoaded(
+        project: Project(
+          entries: [],
+          name: 'a',
+          path: 'a',
+        ),
+      );
+      whenListen(
+        projectCubit,
+        Stream.fromIterable([
+          const ProjectStateInitial(),
+          state,
+          state.copyWith(errors: [ProjectOperationError.fileOutsideProject]),
+        ]),
+        initialState: const ProjectStateInitial(),
+      );
+      await tester.pumpSubject(projectCubit, (_) {});
+      await tester.pump();
+
+      expect(
+        find.text('File creation is allowed only inside the current project'),
+        findsOneWidget,
+      );
+    });
   });
 }
 
@@ -82,10 +131,12 @@ extension on WidgetTester {
     void Function(String)? onOpenFile,
   ]) async {
     await pumpApp(
-      BlocProvider<ProjectCubit>.value(
-        value: projectCubit,
-        child: ProjectTree(
-          onOpenFile: onOpenFile ?? (_) {},
+      Scaffold(
+        body: BlocProvider<ProjectCubit>.value(
+          value: projectCubit,
+          child: ProjectTree(
+            onOpenFile: onOpenFile ?? (_) {},
+          ),
         ),
       ),
     );
