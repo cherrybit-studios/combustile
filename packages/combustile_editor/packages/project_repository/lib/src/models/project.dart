@@ -44,6 +44,20 @@ class Project extends Equatable {
   /// The entries of the project.
   final List<ProjectEntry> entries;
 
+  /// Creates a copy of the project with the given fields replaced with the new
+  /// values.
+  Project copyWith({
+    String? path,
+    String? name,
+    List<ProjectEntry>? entries,
+  }) {
+    return Project(
+      path: path ?? this.path,
+      name: name ?? this.name,
+      entries: entries ?? this.entries,
+    );
+  }
+
   @override
   List<Object> get props => [path, name, entries];
 }

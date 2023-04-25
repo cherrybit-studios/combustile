@@ -11,13 +11,29 @@ class ProjectStateInitial extends ProjectState {
   List<Object> get props => [];
 }
 
+enum ProjectOperationError {
+  fileOutsideProject,
+}
+
 class ProjectStateLoaded extends ProjectState {
   const ProjectStateLoaded({
     required this.project,
+    this.errors = const [],
   });
 
   final Project project;
+  final List<ProjectOperationError> errors;
+
+  ProjectStateLoaded copyWith({
+    Project? project,
+    List<ProjectOperationError>? errors,
+  }) {
+    return ProjectStateLoaded(
+      project: project ?? this.project,
+      errors: errors ?? this.errors,
+    );
+  }
 
   @override
-  List<Object> get props => [project];
+  List<Object> get props => [project, errors];
 }

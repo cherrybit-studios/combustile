@@ -1,5 +1,6 @@
 {
     "@@locale": "en",
     "combustile": "Combustile",
-    "unknownFileType": "Unknown File type"
+    "unknownFileType": "Unknown File type",
+    "fileOutsideProjectError": "File creation is allowed only inside the current project"
 }

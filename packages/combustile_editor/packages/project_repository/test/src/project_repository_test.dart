@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:mocktail/mocktail.dart';
+import 'package:path/path.dart' as path;
 import 'package:project_repository/project_repository.dart';
 import 'package:test/test.dart';
 
@@ -81,6 +82,57 @@ void main() {
             (e) => e.toString(),
             'message',
             'ProjectLoadFailure: Exception: Something went wrong',
+          ),
+        ),
+      );
+    });
+
+    test('can create a file', () async {
+      final entry = await projectRepository.createFile(
+        Directory(
+          path.join(
+            Directory.systemTemp.path,
+          ),
+        ),
+        path.join(
+          Directory.systemTemp.path,
+          'file.dart',
+        ),
+      );
+
+      expect(entry, isNotNull);
+      expect(entry!.name, 'file.dart');
+      expect(
+        entry.path,
+        path.join(
+          Directory.systemTemp.path,
+          'file.dart',
+        ),
+      );
+      expect(entry.isFile, isTrue);
+    });
+
+    test('throws FileOutsideProjectException when file is outside folder',
+        () async {
+      await expectLater(
+        () => projectRepository.createFile(
+          Directory(
+            path.join(
+              Directory.systemTemp.path,
+            ),
+          ),
+          path.join(
+            'test',
+            'file.dart',
+          ),
+        ),
+        throwsA(
+          isA<FileOutsideProjectException>().having(
+            (e) => e.toString(),
+            'message',
+            equals(
+              'FileOutsideProjectException: test/file.dart is not inside ${Directory.systemTemp.path}',
+            ),
           ),
         ),
       );
