@@ -23,4 +23,9 @@ class FileManager {
     final ext = path.extension(filePath);
     return ext == '.png' || ext == '.jpg' || ext == '.jpeg';
   }
+
+  bool isYaml(String filePath) {
+    final ext = path.extension(filePath);
+    return ext == '.yml' || ext == '.yaml';
+  }
 }

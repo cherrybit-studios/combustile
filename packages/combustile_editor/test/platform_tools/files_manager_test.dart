@@ -46,5 +46,16 @@ void main() {
       expect(fileManager.isImage('a/b/c.jpg'), isTrue);
       expect(fileManager.isImage('a/b/c.jpeg'), isTrue);
     });
+
+    test('isYaml returns correctly', () {
+      final fileManager = FileManager();
+      expect(fileManager.isYaml(''), isFalse);
+      expect(fileManager.isYaml('a'), isFalse);
+      expect(fileManager.isYaml('a/b'), isFalse);
+      expect(fileManager.isYaml('a/b/c'), isFalse);
+      expect(fileManager.isYaml('a/b/c.png'), isFalse);
+      expect(fileManager.isYaml('a/b/c.yaml'), isTrue);
+      expect(fileManager.isYaml('a/b/c.yml'), isTrue);
+    });
   });
 }

@@ -41,6 +41,9 @@ class ProjectLoadFailure implements Exception {
   String toString() => 'ProjectLoadFailure: $message';
 }
 
+/// Function signature for creating a new file.
+typedef NewFile = File Function(String path);
+
 /// {@template project_repository}
 /// Repository that allows to manipulate and read project files.
 ///
@@ -48,7 +51,11 @@ class ProjectLoadFailure implements Exception {
 /// {@endtemplate}
 class ProjectRepository {
   /// {@macro project_repository}
-  const ProjectRepository();
+  const ProjectRepository({
+    NewFile newFile = File.new,
+  }) : _newFile = newFile;
+
+  final NewFile _newFile;
 
   /// Loads a project from the given [path].
   Future<Project> loadProject(Directory project) async {
@@ -82,7 +89,7 @@ class ProjectRepository {
   /// Throws a [FileOutsideProjectException] if the file is not inside the
   /// project.
   Future<ProjectEntry?> createFile(Directory project, String filePath) async {
-    final file = File(filePath);
+    final file = _newFile(filePath);
 
     await file.create();
 
@@ -99,5 +106,12 @@ class ProjectRepository {
       name: path.basename(file.path),
       isFile: true,
     );
+  }
+
+  /// Reads a file from the given [filePath].
+  Future<String> readFile(String filePath) async {
+    final file = _newFile(filePath);
+
+    return file.readAsString();
   }
 }
