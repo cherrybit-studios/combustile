@@ -8,6 +8,8 @@ import 'package:test/test.dart';
 
 class _MockDirectory extends Mock implements Directory {}
 
+class _MockFile extends Mock implements File {}
+
 void main() {
   group('ProjectRepository', () {
     late Directory directory;
@@ -136,6 +138,19 @@ void main() {
           ),
         ),
       );
+    });
+
+    test('can read a file', () async {
+      final mockFile = _MockFile();
+      when(mockFile.readAsString).thenAnswer(
+        (_) => Future.value('Hello World'),
+      );
+      projectRepository = ProjectRepository(
+        newFile: (path) => mockFile,
+      );
+
+      final content = await projectRepository.readFile('');
+      expect(content, equals('Hello World'));
     });
   });
 }

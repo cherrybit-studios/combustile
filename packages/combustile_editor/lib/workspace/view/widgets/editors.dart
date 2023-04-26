@@ -26,6 +26,11 @@ class Editors extends StatelessWidget {
           label: name,
           child: ImageView(image: filePath),
         );
+      } else if (filesManager.isYaml(filePath)) {
+        return NesTabItem(
+          label: name,
+          child: YamlEditor(filePath: filePath),
+        );
       } else {
         return NesTabItem(
           label: name,
