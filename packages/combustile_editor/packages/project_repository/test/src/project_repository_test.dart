@@ -152,5 +152,18 @@ void main() {
       final content = await projectRepository.readFile('');
       expect(content, equals('Hello World'));
     });
+
+    test('can write a file', () async {
+      final mockFile = _MockFile();
+      when(() => mockFile.writeAsString(any())).thenAnswer(
+        (_) => Future.value(mockFile),
+      );
+      projectRepository = ProjectRepository(
+        newFile: (path) => mockFile,
+      );
+
+      await projectRepository.writeFile('', 'aa');
+      verify(() => mockFile.writeAsString('aa')).called(1);
+    });
   });
 }

@@ -12,6 +12,7 @@ class YamlEditorCubit extends Cubit<YamlEditorState> {
         super(
           const YamlEditorState(
             status: EditorStatus.loading,
+            savingStatus: EditorSavingStatus.saved,
             content: '',
           ),
         );
@@ -28,6 +29,23 @@ class YamlEditorCubit extends Cubit<YamlEditorState> {
     } catch (e, s) {
       addError(e, s);
       emit(state.copyWith(status: EditorStatus.failure));
+    }
+  }
+
+  Future<void> save(String content) async {
+    emit(state.copyWith(savingStatus: EditorSavingStatus.saving));
+
+    try {
+      await _repository.writeFile(filePath, content);
+      emit(
+        state.copyWith(
+          savingStatus: EditorSavingStatus.saved,
+          content: content,
+        ),
+      );
+    } catch (e, s) {
+      addError(e, s);
+      emit(state.copyWith(savingStatus: EditorSavingStatus.failure));
     }
   }
 }

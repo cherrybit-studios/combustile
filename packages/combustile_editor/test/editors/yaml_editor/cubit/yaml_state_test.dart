@@ -9,6 +9,7 @@ void main() {
       final state = YamlEditorState(
         status: EditorStatus.loading,
         content: 'content',
+        savingStatus: EditorSavingStatus.saved,
       );
       expect(state, isNotNull);
     });
@@ -17,6 +18,7 @@ void main() {
       final state = YamlEditorState(
         status: EditorStatus.loading,
         content: 'content',
+        savingStatus: EditorSavingStatus.saved,
       );
       expect(
         state,
@@ -24,6 +26,7 @@ void main() {
           YamlEditorState(
             status: EditorStatus.loading,
             content: 'content',
+            savingStatus: EditorSavingStatus.saved,
           ),
         ),
       );
@@ -35,6 +38,7 @@ void main() {
             YamlEditorState(
               status: EditorStatus.loaded,
               content: 'content',
+              savingStatus: EditorSavingStatus.saved,
             ),
           ),
         ),
@@ -47,6 +51,20 @@ void main() {
             YamlEditorState(
               status: EditorStatus.loading,
               content: 'content 2',
+              savingStatus: EditorSavingStatus.saved,
+            ),
+          ),
+        ),
+      );
+
+      expect(
+        state,
+        isNot(
+          equals(
+            YamlEditorState(
+              status: EditorStatus.loading,
+              content: 'content',
+              savingStatus: EditorSavingStatus.saving,
             ),
           ),
         ),
@@ -58,11 +76,13 @@ void main() {
         YamlEditorState(
           status: EditorStatus.loading,
           content: 'content',
+          savingStatus: EditorSavingStatus.saved,
         ).copyWith(),
         equals(
           YamlEditorState(
             status: EditorStatus.loading,
             content: 'content',
+            savingStatus: EditorSavingStatus.saved,
           ),
         ),
       );
@@ -71,11 +91,13 @@ void main() {
         YamlEditorState(
           status: EditorStatus.loaded,
           content: 'content',
+          savingStatus: EditorSavingStatus.saved,
         ).copyWith(status: EditorStatus.loading),
         equals(
           YamlEditorState(
             status: EditorStatus.loading,
             content: 'content',
+            savingStatus: EditorSavingStatus.saved,
           ),
         ),
       );
@@ -84,11 +106,28 @@ void main() {
         YamlEditorState(
           status: EditorStatus.loading,
           content: 'content',
+          savingStatus: EditorSavingStatus.saved,
         ).copyWith(content: 'content 2'),
         equals(
           YamlEditorState(
             status: EditorStatus.loading,
             content: 'content 2',
+            savingStatus: EditorSavingStatus.saved,
+          ),
+        ),
+      );
+
+      expect(
+        YamlEditorState(
+          status: EditorStatus.loading,
+          content: 'content',
+          savingStatus: EditorSavingStatus.saved,
+        ).copyWith(savingStatus: EditorSavingStatus.saving),
+        equals(
+          YamlEditorState(
+            status: EditorStatus.loading,
+            content: 'content',
+            savingStatus: EditorSavingStatus.saving,
           ),
         ),
       );

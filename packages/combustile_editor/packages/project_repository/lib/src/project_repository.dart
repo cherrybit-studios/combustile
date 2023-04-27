@@ -114,4 +114,11 @@ class ProjectRepository {
 
     return file.readAsString();
   }
+
+  /// Writes a file to the given [filePath].
+  Future<void> writeFile(String filePath, String content) async {
+    final file = _newFile(filePath);
+
+    await file.writeAsString(content);
+  }
 }
