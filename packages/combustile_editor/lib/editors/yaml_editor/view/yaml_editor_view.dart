@@ -18,6 +18,8 @@ class YamlEditorView extends StatefulWidget {
 class _YamlEditorViewState extends State<YamlEditorView> {
   late CodeController _codeController;
 
+  bool _isDirty = false;
+
   @override
   void initState() {
     super.initState();
@@ -25,7 +27,14 @@ class _YamlEditorViewState extends State<YamlEditorView> {
     _codeController = CodeController(
       language: yaml,
       text: context.read<YamlEditorCubit>().state.content,
-    );
+    )..addListener(() {
+        if (!_isDirty) {
+          setState(() {
+            _isDirty = _codeController.text !=
+                context.read<YamlEditorCubit>().state.content;
+          });
+        }
+      });
   }
 
   @override
@@ -41,12 +50,16 @@ class _YamlEditorViewState extends State<YamlEditorView> {
                   NesIconButton(
                     key: YamlEditorView.saveIconKey,
                     icon: NesIcons.instance.saveFile,
-                    onPress: state.savingStatus == EditorSavingStatus.saving
+                    onPress: (state.savingStatus == EditorSavingStatus.saving ||
+                            !_isDirty)
                         ? null
-                        : () {
-                            context.read<YamlEditorCubit>().save(
+                        : () async {
+                            await context.read<YamlEditorCubit>().save(
                                   _codeController.text,
                                 );
+                            setState(() {
+                              _isDirty = false;
+                            });
                           },
                   ),
                 ],
