@@ -1,6 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:code_text_field/code_text_field.dart';
 import 'package:combustile_editor/editors/editors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -59,30 +61,72 @@ void main() {
       expect(find.text('test'), findsOneWidget);
     });
 
-    testWidgets('calls save when saving the file', (tester) async {
-      when(() => yamlEditorCubit.save(any())).thenAnswer((_) async {});
-      const state = YamlEditorState(
-        status: EditorStatus.loading,
-        savingStatus: EditorSavingStatus.saved,
-        content: 'test',
-      );
-      whenListen(
-        yamlEditorCubit,
-        Stream.fromIterable([state]),
-        initialState: state,
-      );
-      await tester.pumpSubject(yamlEditorCubit);
+    testWidgets(
+      'calls save when saving the file and there is change',
+      (tester) async {
+        when(() => yamlEditorCubit.save(any())).thenAnswer((_) async {});
+        const state = YamlEditorState(
+          status: EditorStatus.loading,
+          savingStatus: EditorSavingStatus.saved,
+          content: 'test',
+        );
+        whenListen(
+          yamlEditorCubit,
+          Stream.fromIterable([state]),
+          initialState: state,
+        );
+        await tester.pumpSubject(yamlEditorCubit);
 
-      await tester.tap(
-        find.descendant(
-          of: find.byKey(YamlEditorView.saveIconKey),
-          matching: find.byType(NesIcon),
-        ),
-      );
-      await tester.pumpAndSettle();
+        await tester.enterText(
+          find
+              .descendant(
+                of: find.byType(CodeField),
+                matching: find.byType(TextField),
+              )
+              .last,
+          'asd',
+        );
+        await tester.pump();
 
-      verify(() => yamlEditorCubit.save('test')).called(1);
-    });
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(YamlEditorView.saveIconKey),
+            matching: find.byType(NesIcon),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        verify(() => yamlEditorCubit.save('asd')).called(1);
+      },
+    );
+
+    testWidgets(
+      'does not call save when there is no change',
+      (tester) async {
+        when(() => yamlEditorCubit.save(any())).thenAnswer((_) async {});
+        const state = YamlEditorState(
+          status: EditorStatus.loading,
+          savingStatus: EditorSavingStatus.saved,
+          content: 'test',
+        );
+        whenListen(
+          yamlEditorCubit,
+          Stream.fromIterable([state]),
+          initialState: state,
+        );
+        await tester.pumpSubject(yamlEditorCubit);
+
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(YamlEditorView.saveIconKey),
+            matching: find.byType(NesIcon),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        verifyNever(() => yamlEditorCubit.save('asd'));
+      },
+    );
   });
 }
 
