@@ -1,5 +1,5 @@
 map:
-  size: 15, 10
+  size: 15, 15
   tileset:
     tile_size: 16
     image: assets/images/tileset.png

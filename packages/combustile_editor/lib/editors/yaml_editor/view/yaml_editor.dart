@@ -7,9 +7,11 @@ class YamlEditor extends StatelessWidget {
   const YamlEditor({
     super.key,
     required this.filePath,
+    required this.projectPath,
   });
 
   final String filePath;
+  final String projectPath;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class YamlEditor extends StatelessWidget {
           filePath: filePath,
         )..load();
       },
-      child: const YamlEditorView(),
+      child: YamlEditorView(projectPath: projectPath),
     );
   }
 }

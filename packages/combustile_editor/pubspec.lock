@@ -425,10 +425,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "5f41ca41696ec1a021dc4e835ab417457e17cd90"
+      resolved-ref: d7979636dde8435eef6a6b4ece4329060094ce84
       url: "https://github.com/erickzanardo/nes_ui.git"
     source: git
-    version: "0.5.0"
+    version: "0.6.0"
   nested:
     dependency: transitive
     description:
@@ -778,5 +778,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=3.0.0-0 <4.0.0"
-  flutter: ">=3.7.0"
+  dart: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"

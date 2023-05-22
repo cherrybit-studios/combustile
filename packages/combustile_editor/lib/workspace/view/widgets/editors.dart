@@ -1,6 +1,7 @@
 import 'package:combustile_editor/editors/editors.dart';
 import 'package:combustile_editor/l10n/l10n.dart';
 import 'package:combustile_editor/platform_tools/platform_tools.dart';
+import 'package:combustile_editor/project/project.dart';
 import 'package:combustile_editor/workspace/workspace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +17,14 @@ class Editors extends StatelessWidget {
     final l10n = context.l10n;
     final filesManager = context.read<FileManager>();
     final workspaceCubit = context.watch<WorkspaceCubit>();
+    final projectCubit = context.watch<ProjectCubit>();
+
     final state = workspaceCubit.state;
+    final projectState = projectCubit.state;
+    var projectPath = '';
+    if (projectState is ProjectStateLoaded) {
+      projectPath = projectState.project.path;
+    }
 
     final tabs = state.tabs.map((filePath) {
       final name = filesManager.fileName(filePath);
@@ -29,7 +37,10 @@ class Editors extends StatelessWidget {
       } else if (filesManager.isYaml(filePath)) {
         return NesTabItem(
           label: name,
-          child: YamlEditor(filePath: filePath),
+          child: YamlEditor(
+            filePath: filePath,
+            projectPath: projectPath,
+          ),
         );
       } else {
         return NesTabItem(
