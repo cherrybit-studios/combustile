@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:combustile_editor/editors/editors.dart';
 import 'package:combustile_editor/platform_tools/platform_tools.dart';
+import 'package:combustile_editor/project/project.dart';
 import 'package:combustile_editor/workspace/workspace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,17 +18,22 @@ class _MockFileManager extends Mock implements FileManager {}
 class _MockWorkspaceCubit extends MockCubit<WorkspaceState>
     implements WorkspaceCubit {}
 
+class _MockProjectCubit extends MockCubit<ProjectState>
+    implements ProjectCubit {}
+
 class _MockProjectRepository extends Mock implements ProjectRepository {}
 
 void main() {
   group('Workspace Editors', () {
     late FileManager fileManager;
     late WorkspaceCubit workspaceCubit;
+    late ProjectCubit projectCubit;
     late ProjectRepository projectRepository;
 
     setUp(() {
       fileManager = _MockFileManager();
       workspaceCubit = _MockWorkspaceCubit();
+      projectCubit = _MockProjectCubit();
       projectRepository = _MockProjectRepository();
 
       const state = WorkspaceState(
@@ -38,6 +44,20 @@ void main() {
         workspaceCubit,
         Stream.value(state),
         initialState: state,
+      );
+
+      const projectState = ProjectStateLoaded(
+        project: Project(
+          path: 'test',
+          name: 'test',
+          entries: [],
+        ),
+      );
+
+      whenListen(
+        projectCubit,
+        Stream.value(projectState),
+        initialState: projectState,
       );
 
       when(() => fileManager.loadFileBytes(any())).thenAnswer(
@@ -51,6 +71,7 @@ void main() {
     testWidgets('renders correctly', (tester) async {
       await tester.pumpSubject(
         cubit: workspaceCubit,
+        projectCubit: projectCubit,
         fileManager: fileManager,
         projectRepository: projectRepository,
       );
@@ -63,6 +84,7 @@ void main() {
       (tester) async {
         await tester.pumpSubject(
           cubit: workspaceCubit,
+          projectCubit: projectCubit,
           fileManager: fileManager,
           projectRepository: projectRepository,
         );
@@ -78,6 +100,7 @@ void main() {
         when(() => fileManager.isImage(any())).thenReturn(true);
         await tester.pumpSubject(
           cubit: workspaceCubit,
+          projectCubit: projectCubit,
           fileManager: fileManager,
           projectRepository: projectRepository,
         );
@@ -93,6 +116,7 @@ void main() {
         when(() => fileManager.isYaml(any())).thenReturn(true);
         await tester.pumpSubject(
           cubit: workspaceCubit,
+          projectCubit: projectCubit,
           fileManager: fileManager,
           projectRepository: projectRepository,
         );
@@ -106,6 +130,7 @@ void main() {
 extension WorkspaceEditorTest on WidgetTester {
   Future<void> pumpSubject({
     required WorkspaceCubit cubit,
+    required ProjectCubit projectCubit,
     required FileManager fileManager,
     required ProjectRepository projectRepository,
   }) async {
@@ -122,6 +147,7 @@ extension WorkspaceEditorTest on WidgetTester {
         child: MultiBlocProvider(
           providers: [
             BlocProvider<WorkspaceCubit>.value(value: cubit),
+            BlocProvider<ProjectCubit>.value(value: projectCubit),
           ],
           child: const Scaffold(body: Editors()),
         ),

@@ -72,6 +72,56 @@ void main() {
       );
     });
 
+    test("don't add files from hidden folders", () async {
+      when(() => directory.path).thenReturn('/home/my_game');
+      when(() => directory.list(recursive: true)).thenAnswer(
+        (_) => Stream.fromIterable(
+          [
+            Directory('/home/my_game/.github'),
+            File('/home/my_game/.github/config.yml'),
+            Directory('/home/my_game/assets'),
+            File('/home/my_game/assets/character.png'),
+            Directory('/home/my_game/src'),
+            File('/home/my_game/src/character.dart'),
+          ],
+        ),
+      );
+
+      final project = await projectRepository.loadProject(directory);
+
+      expect(
+        project,
+        equals(
+          Project(
+            name: 'my_game',
+            path: '/home/my_game',
+            entries: const [
+              ProjectEntry(
+                name: 'assets',
+                path: '/home/my_game/assets',
+                isFile: false,
+              ),
+              ProjectEntry(
+                name: 'character.png',
+                path: '/home/my_game/assets/character.png',
+                isFile: true,
+              ),
+              ProjectEntry(
+                name: 'src',
+                path: '/home/my_game/src',
+                isFile: false,
+              ),
+              ProjectEntry(
+                name: 'character.dart',
+                path: '/home/my_game/src/character.dart',
+                isFile: true,
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+
     test('throws ProjectLoadFailure when something wrong happens', () async {
       when(() => directory.list(recursive: true)).thenThrow(
         Exception('Something went wrong'),
