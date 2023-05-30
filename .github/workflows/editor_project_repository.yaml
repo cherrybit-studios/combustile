@@ -20,16 +20,16 @@ on:
 
 jobs:
   semantic_pull_request:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1.12.0
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1.13.0
 
   spell-check:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1.12.0
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1.13.0
     with:
       includes: "**/*.md"
       modified_files_only: false
 
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1.12.0
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1.13.0
     with:
       working_directory: packages/combustile_editor/packages/project_repository
 
