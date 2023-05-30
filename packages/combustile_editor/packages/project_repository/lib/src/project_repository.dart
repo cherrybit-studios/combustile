@@ -63,13 +63,29 @@ class ProjectRepository {
       final list = project.list(recursive: true);
 
       final entries = <ProjectEntry>[];
+      final skippedFolders = <String>[];
 
       await for (final entry in list) {
+        final isFile = entry is File;
+        final name = path.basename(entry.path);
+        if (name.startsWith('.')) {
+          if (!isFile) {
+            skippedFolders.add(name);
+          }
+          continue;
+        }
+
+        if (skippedFolders
+            .where((folder) => entry.path.contains(folder))
+            .isNotEmpty) {
+          continue;
+        }
+
         entries.add(
           ProjectEntry(
             path: entry.path,
-            name: path.basename(entry.path),
-            isFile: entry is File,
+            name: name,
+            isFile: isFile,
           ),
         );
       }

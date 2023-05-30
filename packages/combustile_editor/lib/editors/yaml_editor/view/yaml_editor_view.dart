@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:code_text_field/code_text_field.dart';
 import 'package:combustile_editor/editors/editors.dart';
 import 'package:combustile_editor/l10n/l10n.dart';
-import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,6 +71,11 @@ class _YamlEditorViewState extends State<YamlEditorView> {
                             await context.read<YamlEditorCubit>().save(
                                   _codeController.text,
                                 );
+                            unawaited(
+                              _previewGame.reloadYaml(
+                                _codeController.text,
+                              ),
+                            );
                             setState(() {
                               _isDirty = false;
                             });
@@ -106,27 +112,55 @@ class _YamlEditorViewState extends State<YamlEditorView> {
                 Positioned(
                   top: _windowPosition.y,
                   left: _windowPosition.x,
-                  child: NesWindow(
-                    title: l10n.preview,
-                    width: _windowSize.x,
-                    height: _windowSize.y,
-                    onResize: (size) {
-                      setState(() {
-                        _windowSize
-                          ..x += size.dx
-                          ..y += size.dy;
-                      });
-                    },
-                    onMove: (delta) {
-                      setState(() {
-                        _windowPosition
-                          ..x += delta.dx
-                          ..y += delta.dy;
-                      });
-                    },
-                    child: Expanded(
-                      child: ClipRect(
-                        child: GameWidget(game: _previewGame),
+                  child: NesDropshadow(
+                    child: NesWindow(
+                      title: l10n.preview,
+                      width: _windowSize.x,
+                      height: _windowSize.y,
+                      onResize: (size) {
+                        setState(() {
+                          _windowSize
+                            ..x += size.dx
+                            ..y += size.dy;
+                        });
+                      },
+                      onMove: (delta) {
+                        setState(() {
+                          _windowPosition
+                            ..x += delta.dx
+                            ..y += delta.dy;
+                        });
+                      },
+                      child: Expanded(
+                        child: ClipRect(
+                          child: Stack(
+                            children: [
+                              Positioned.fill(
+                                child: GameWidget(game: _previewGame),
+                              ),
+                              Positioned(
+                                bottom: 4,
+                                right: 4,
+                                child: NesIconButton(
+                                  icon: NesIcons.instance.zoomIn,
+                                  onPress: () {
+                                    _previewGame.zoomIn();
+                                  },
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 4,
+                                left: 4,
+                                child: NesIconButton(
+                                  icon: NesIcons.instance.zoomOut,
+                                  onPress: () {
+                                    _previewGame.zoomOut();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),

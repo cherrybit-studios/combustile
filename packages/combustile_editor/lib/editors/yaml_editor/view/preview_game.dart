@@ -3,8 +3,10 @@ import 'dart:ui';
 
 import 'package:combustile/combustile.dart';
 import 'package:flame/cache.dart';
+import 'package:flame/events.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart' hide Image;
 import 'package:path/path.dart' as path;
 
 class FileImages extends Images {
@@ -27,7 +29,7 @@ class FileImages extends Images {
   }
 }
 
-class PreviewGame extends FlameGame {
+class PreviewGame extends FlameGame with PanDetector {
   PreviewGame(this.projectPath);
 
   final String projectPath;
@@ -36,6 +38,21 @@ class PreviewGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     images = FileImages(projectPath)..prefix = '';
+  }
+
+  @override
+  void handlePanUpdate(DragUpdateDetails details) {
+    position?.sub(details.delta.toVector2());
+  }
+
+  void zoomIn() {
+    camera.zoom += 0.1;
+  }
+
+  void zoomOut() {
+    if (camera.zoom > 0.1) {
+      camera.zoom -= 0.1;
+    }
   }
 
   Future<void> reloadYaml(String mapFile) async {

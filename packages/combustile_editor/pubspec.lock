@@ -425,7 +425,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d7979636dde8435eef6a6b4ece4329060094ce84
+      resolved-ref: aaf2c9e00d9ec6a685b3db47357628811162494c
       url: "https://github.com/erickzanardo/nes_ui.git"
     source: git
     version: "0.6.0"

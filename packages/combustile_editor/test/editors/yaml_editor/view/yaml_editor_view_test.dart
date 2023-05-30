@@ -93,7 +93,7 @@ void main() {
             matching: find.byType(NesIcon),
           ),
         );
-        await tester.pumpAndSettle();
+        await tester.pump();
 
         verify(() => yamlEditorCubit.save('asd')).called(1);
       },
@@ -121,7 +121,7 @@ void main() {
             matching: find.byType(NesIcon),
           ),
         );
-        await tester.pumpAndSettle();
+        await tester.pump();
 
         verifyNever(() => yamlEditorCubit.save('asd'));
       },
@@ -137,7 +137,7 @@ extension on WidgetTester {
       Scaffold(
         body: BlocProvider<YamlEditorCubit>.value(
           value: yamlEditorCubit,
-          child: const YamlEditorView(),
+          child: const YamlEditorView(projectPath: ''),
         ),
       ),
     );
