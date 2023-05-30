@@ -27,6 +27,7 @@ jobs:
     with:
       flutter_channel: beta
       working_directory: packages/combustile_editor
+      min_coverage: 85
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1.12.0
