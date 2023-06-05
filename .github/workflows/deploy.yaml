@@ -1,0 +1,65 @@
+name: Deploy
+
+on: workflow_dispatch
+
+env:
+  ITCH_USERNAME: cherrybit
+  ITCH_GAME_ID: combustile-editor
+
+jobs:
+  deploy_linux:
+    name: Upload to Itch (Linux)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v2
+
+      - run: cd packages/combustile_editor && flutter build linux
+      - uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          working
+          butlerApiKey: ${{secrets.ITCH_KEY}}
+          gameData: ./packages/combustile_editor/build/linux/x64/release/bundle/
+          itchUsername: ${{env.ITCH_USERNAME}}
+          itchGameId: ${{ env.ITCH_GAME_ID }}
+          buildChannel: linux
+
+  deploy_windows:
+    name: Upload to Itch (Windows)
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v2
+
+      - run: cd packages/combustile_editor && flutter build windows
+      - uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          working
+          butlerApiKey: ${{secrets.ITCH_KEY}}
+          gameData: ./packages/combustile_editor/build/windows/runner/Release/
+          itchUsername: ${{env.ITCH_USERNAME}}
+          itchGameId: ${{ env.ITCH_GAME_ID }}
+          buildChannel: windows
+
+  deploy_windows:
+    name: Upload to Itch (OSX)
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v2
+
+      - run: cd packages/combustile_editor && flutter build macos
+      - uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          working
+          butlerApiKey: ${{secrets.ITCH_KEY}}
+          gameData: ./packages/combustile_editor/build/macos/Build/Products/Release/Combustile\ Editor.app
+          itchUsername: ${{env.ITCH_USERNAME}}
+          itchGameId: ${{ env.ITCH_GAME_ID }}
+          buildChannel: macos
