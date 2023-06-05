@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:combustile/combustile.dart';
+import 'package:combustile_editor/editors/editors.dart';
 import 'package:flame/cache.dart';
 import 'package:flame/events.dart';
 import 'package:flame/extensions.dart';
@@ -29,10 +30,14 @@ class FileImages extends Images {
 }
 
 class PreviewGame extends FlameGame with PanDetector {
-  PreviewGame(this.projectPath);
+  PreviewGame({
+    required this.projectPath,
+    required this.yamlEditorCubit,
+  });
 
   final String projectPath;
   Vector2? position;
+  final YamlEditorCubit yamlEditorCubit;
 
   @override
   Future<void> onLoad() async {
@@ -68,9 +73,9 @@ class PreviewGame extends FlameGame with PanDetector {
           ..followVector2(position!)
           ..zoom = size.y / totalSize.y;
       }
+      yamlEditorCubit.clearErrorMessages();
     } catch (e) {
-      // Ignoring for now, we simply don't update the map
-      // if the parsing fails.
+      yamlEditorCubit.addErrorMessage(e.toString());
     }
   }
 }
