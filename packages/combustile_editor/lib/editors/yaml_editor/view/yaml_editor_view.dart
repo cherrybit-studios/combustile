@@ -30,12 +30,18 @@ class _YamlEditorViewState extends State<YamlEditorView> {
   bool _isDirty = false;
   final _windowSize = Vector2(200, 100);
   final _windowPosition = Vector2.zero();
-  late final _previewGame = PreviewGame(widget.projectPath);
+  late final PreviewGame _previewGame;
 
   @override
   void initState() {
     super.initState();
-    final text = context.read<YamlEditorCubit>().state.content;
+    final cubit = context.read<YamlEditorCubit>();
+    final text = cubit.state.content;
+
+    _previewGame = PreviewGame(
+      projectPath: widget.projectPath,
+      yamlEditorCubit: cubit,
+    );
 
     _codeController = CodeController(
       language: yaml,
@@ -100,13 +106,22 @@ class _YamlEditorViewState extends State<YamlEditorView> {
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: NesSingleChildScrollView(
-                    child: CodeTheme(
-                      data: const CodeThemeData(styles: monokaiSublimeTheme),
-                      child: CodeField(
-                        controller: _codeController,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: NesSingleChildScrollView(
+                          child: CodeTheme(
+                            data: const CodeThemeData(
+                              styles: monokaiSublimeTheme,
+                            ),
+                            child: CodeField(
+                              controller: _codeController,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      const BottomPanel(),
+                    ],
                   ),
                 ),
                 Positioned(

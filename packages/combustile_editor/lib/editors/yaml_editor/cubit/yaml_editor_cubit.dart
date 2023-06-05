@@ -48,4 +48,20 @@ class YamlEditorCubit extends Cubit<YamlEditorState> {
       emit(state.copyWith(savingStatus: EditorSavingStatus.failure));
     }
   }
+
+  void clearErrorMessages() {
+    emit(
+      state.copyWith(
+        parseErrors: [],
+      ),
+    );
+  }
+
+  void addErrorMessage(String error) {
+    emit(
+      state.copyWith(
+        parseErrors: [...state.parseErrors, error],
+      ),
+    );
+  }
 }

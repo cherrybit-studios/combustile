@@ -150,5 +150,49 @@ void main() {
         ),
       ],
     );
+
+    blocTest<YamlEditorCubit, YamlEditorState>(
+      'can add parse error messages',
+      seed: () => const YamlEditorState(
+        status: EditorStatus.loaded,
+        content: 'test',
+        savingStatus: EditorSavingStatus.saved,
+      ),
+      build: () => YamlEditorCubit(
+        repository: projectRepository,
+        filePath: 'file.yaml',
+      ),
+      act: (cubit) => cubit.addErrorMessage('error'),
+      expect: () => [
+        const YamlEditorState(
+          status: EditorStatus.loaded,
+          content: 'test',
+          savingStatus: EditorSavingStatus.saved,
+          parseErrors: ['error'],
+        ),
+      ],
+    );
+
+    blocTest<YamlEditorCubit, YamlEditorState>(
+      'can clear parse error messages',
+      seed: () => const YamlEditorState(
+        status: EditorStatus.loaded,
+        content: 'test',
+        savingStatus: EditorSavingStatus.saved,
+        parseErrors: ['error'],
+      ),
+      build: () => YamlEditorCubit(
+        repository: projectRepository,
+        filePath: 'file.yaml',
+      ),
+      act: (cubit) => cubit.clearErrorMessages(),
+      expect: () => [
+        const YamlEditorState(
+          status: EditorStatus.loaded,
+          content: 'test',
+          savingStatus: EditorSavingStatus.saved,
+        ),
+      ],
+    );
   });
 }

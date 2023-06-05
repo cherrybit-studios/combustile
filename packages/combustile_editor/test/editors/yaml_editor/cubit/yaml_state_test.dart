@@ -131,6 +131,22 @@ void main() {
           ),
         ),
       );
+
+      expect(
+        YamlEditorState(
+          status: EditorStatus.loading,
+          content: 'content',
+          savingStatus: EditorSavingStatus.saved,
+        ).copyWith(parseErrors: ['error']),
+        equals(
+          YamlEditorState(
+            status: EditorStatus.loading,
+            content: 'content',
+            savingStatus: EditorSavingStatus.saved,
+            parseErrors: const ['error'],
+          ),
+        ),
+      );
     });
   });
 }
