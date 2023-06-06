@@ -24,7 +24,7 @@ jobs:
           files: ./packages/combustile_editor/build/linux/x64/release/bundle/
           dest: linux.zip
       - name: Upload binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: linux
           path: linux.zip
@@ -45,7 +45,7 @@ jobs:
           files: ./packages/combustile_editor/build/windows/runner/Release/
           dest: windows.zip
       - name: Upload binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: windows
           path: windows.zip
@@ -63,7 +63,7 @@ jobs:
       - name: Zips the build
         run: cd ./packages/combustile_editor/build/macos/Build/Products/Release && zip -r osx.zip Combustile\ Editor.app
       - name: Upload binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: osx
           path: ./packages/combustile_editor/build/macos/Build/Products/Release/osx.zip
