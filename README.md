@@ -51,6 +51,8 @@ its area, while `SingleObject` will use a single tile to renders its full size.
 
 Check our [example](./packages/combustile/example) for a more complete example.
 
+If you have questions, join our [Discord](https://discord.gg/w86KS47n6x) and reach us there :)
+
 ---
 
 [flutter_install_link]: https://docs.flutter.dev/get-started/install
