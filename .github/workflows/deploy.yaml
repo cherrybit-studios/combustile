@@ -73,7 +73,7 @@ jobs:
 
 
   release_desktop:
-    needs: [build_linux, build_mac, build_windows]
+    needs: [build_linux, build_osx, build_windows]
     runs-on: ubuntu-latest
 
     steps:
