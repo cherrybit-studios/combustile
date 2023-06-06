@@ -1,11 +1,11 @@
 name: combustile
 description: A simple tile system, that provides a declarative API, with Flame Component System in mind
-version: 0.1.0+1
-publish_to: none
+version: 0.1.0
+repository: https://github.com/cherrybit-studios/combustile
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
-  flutter: 3.3.0
+  sdk: ">=2.18.0 <4.0.0"
+  flutter: ">=3.3.0"
 
 dependencies:
   equatable: ^2.0.5
