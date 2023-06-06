@@ -61,15 +61,12 @@ jobs:
 
       - run: cd packages/combustile_editor && flutter build macos
       - name: Zips the build
-        uses: papeloto/action-zip@v1
-        with:
-          files: ./packages/combustile_editor/build/macos/Build/Products/Release/Combustile\ Editor.app
-          dest: osx.zip
+        run: cd ./packages/combustile_editor/build/macos/Build/Products/Release && zip -r osx.zip Combustile\ Editor.app
       - name: Upload binary
         uses: actions/upload-artifact@v2
         with:
           name: osx
-          path: osx.zip
+          path: ./packages/combustile_editor/build/macos/Build/Products/Release/osx.zip
 
 
   release_desktop:
