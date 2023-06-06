@@ -8,7 +8,7 @@ env:
 
 jobs:
   build_linux:
-    name: Upload to Itch (Linux)
+    name: Build Linux
     runs-on: ubuntu-latest
 
     steps:
@@ -30,7 +30,7 @@ jobs:
           path: linux.zip
 
   build_windows:
-    name: Upload to Itch (Windows)
+    name: Build Windows
     runs-on: windows-latest
 
     steps:
@@ -51,7 +51,7 @@ jobs:
           path: windows.zip
 
   build_osx:
-    name: Upload to Itch (OSX)
+    name: Build OSX
     runs-on: macos-latest
 
     steps:
